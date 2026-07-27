@@ -1,18 +1,18 @@
 # hex
 
-TODO: Write a description here
+Crystal port of [KokaKiwi/rust-hex](https://github.com/KokaKiwi/rust-hex) — encoding and decoding data into/from hexadecimal representation.
 
 ## Installation
 
-1. Add the dependency to your `shard.yml`:
+Add the dependency to your `shard.yml`:
 
-   ```yaml
-   dependencies:
-     hex:
-       github: dsisnero/hex
-   ```
+```yaml
+dependencies:
+  hex:
+    github: dsisnero/hex
+```
 
-2. Run `shards install`
+Run `shards install`.
 
 ## Usage
 
@@ -20,20 +20,83 @@ TODO: Write a description here
 require "hex"
 ```
 
-TODO: Write usage instructions here
+### Encoding
 
-## Development
+Lowercase hex encoding via free function:
 
-TODO: Write development instructions here
+```crystal
+hex_string = Hex.encode("Hello world!")
+puts hex_string # => "48656c6c6f20776f726c6421"
+```
 
-## Contributing
+Uppercase hex encoding:
 
-1. Fork it (<https://github.com/dsisnero/hex/fork>)
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+```crystal
+hex_string = Hex.encode_upper("Hello world!")
+puts hex_string # => "48656C6C6F20776F726C6421"
+```
 
-## Contributors
+Into an existing buffer:
 
-- [Dominic Sisneros](https://github.com/dsisnero) - creator and maintainer
+```crystal
+buf = Bytes.new(12 * 2)
+Hex.encode_to_slice("Hello world!", buf)
+puts String.new(buf) # => "48656c6c6f20776f726c6421"
+```
+
+### Decoding
+
+```crystal
+bytes = Hex.decode("48656c6c6f20776f726c6421")
+puts String.new(bytes) # => "Hello world!"
+```
+
+Into an existing buffer:
+
+```crystal
+buf = Bytes.new(12)
+Hex.decode_to_slice("48656c6c6f20776f726c6421", buf)
+puts String.new(buf) # => "Hello world!"
+```
+
+In-place decoding (decodes hex string buffer into its first half):
+
+```crystal
+buf = "48656c6c6f20776f726c6421".to_slice.dup
+Hex.decode_in_slice(buf)
+puts String.new(buf[0, 12]) # => "Hello world!"
+```
+
+### Trait-style interface
+
+`String`, `Bytes`, and `Array(UInt8)` all include `Hex::ToHex`:
+
+```crystal
+"Hello world!".encode_hex      # => "48656c6c6f20776f726c6421"
+"Hello world!".encode_hex_upper # => "48656C6C6F20776F726C6421"
+```
+
+Array decoding via class method:
+
+```crystal
+Array(UInt8).from_hex("48656c6c6f20776f726c6421")
+```
+
+### Error handling
+
+```crystal
+Hex.decode("xyz") # raises Hex::FromHexError::InvalidHexCharacter
+Hex.decode("abc") # raises Hex::FromHexError::OddLength
+```
+
+## Documentation
+
+- [Architecture](docs/architecture.md)
+- [Development](docs/development.md)
+- [Coding guidelines](docs/coding-guidelines.md)
+- [Testing](docs/testing.md)
+- [PR workflow](docs/pr-workflow.md)
+
+## License
+
+MIT License — see [LICENSE](LICENSE).
