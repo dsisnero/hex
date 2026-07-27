@@ -140,6 +140,23 @@ describe Hex do
     end
   end
 
+  describe "FromHexError display" do
+    it "formats InvalidHexCharacter with escaped chars" do
+      err = Hex::FromHexError.new(Hex::FromHexError::Kind::InvalidHexCharacter, '\n', 5)
+      err.message.should eq("Invalid character '\\n' at position 5")
+    end
+
+    it "formats OddLength" do
+      err = Hex::FromHexError.new(Hex::FromHexError::Kind::OddLength)
+      err.message.should eq("Odd number of digits")
+    end
+
+    it "formats InvalidStringLength" do
+      err = Hex::FromHexError.new(Hex::FromHexError::Kind::InvalidStringLength)
+      err.message.should eq("Invalid string length")
+    end
+  end
+
   describe "decode_in_slice" do
     it "decodes in place" do
       mut = "6b697769".to_slice.dup

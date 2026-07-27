@@ -15,7 +15,7 @@ module Hex
     def initialize(@kind : Kind, @char : Char? = nil, @index : Int32? = nil)
       msg = case kind
             when Kind::InvalidHexCharacter
-              "Invalid character '#{char}' at position #{index}"
+              "Invalid character #{char.inspect} at position #{index}"
             when Kind::OddLength
               "Odd number of digits"
             when Kind::InvalidStringLength
