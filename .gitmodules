@@ -1,0 +1,3 @@
+[submodule "vendor/rust-hex"]
+	path = vendor/rust-hex
+	url = https://github.com/KokaKiwi/rust-hex.git

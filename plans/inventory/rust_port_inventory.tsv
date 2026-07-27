@@ -1,0 +1,13 @@
+rust_item	rust_kind	crystal_refs	crystal_status	notes
+FromHexError	enum	src/hex.cr::FromHexError	ported	Exception with Kind enum: InvalidHexCharacter, OddLength, InvalidStringLength
+encode	fn	src/hex.cr::encode	ported	Lowercase hex encode returning String
+encode_upper	fn	src/hex.cr::encode_upper	ported	Uppercase hex encode returning String
+decode	fn	src/hex.cr::decode	ported	Decode hex string to Array(UInt8)
+encode_to_slice	fn	src/hex.cr::encode_to_slice	ported	Encode into mutable byte slice
+encode_to_slice_upper	fn	src/hex.cr::encode_to_slice_upper	ported	Uppercase encode into byte slice
+decode_to_slice	fn	src/hex.cr::decode_to_slice	ported	Decode into mutable byte slice
+decode_in_slice	fn	src/hex.cr::decode_in_slice	ported	Decode hex in-place
+ToHex	trait	src/hex.cr::ToHex	ported	encode_hex, encode_hex_upper extended on Slice, Array, String
+FromHex(Vec<u8>)	trait	Array(UInt8).from_hex	ported	Class method on Array(UInt8)
+FromHex([u8; N])	trait	Hex.decode_to_slice	ported	Via decode_to_slice with StaticArray#to_slice
+serde	mod	-	skipped	serde support deferred
