@@ -7,6 +7,9 @@
 # Build artifacts
 *.dwarf
 
+# Apple Double / resource fork files
+._*
+
 # Local agent/tool settings
 .claude/
 
